@@ -1,10 +1,15 @@
+import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
 class Hero(n: String) : Unit(0) {
     val name:String = n
+    var huntLvl = 1
     private var xp = 0L
     private var xpMax = 0L
     var freeStats = 0
+    var huntService = fixedRateTimer("hunting", period = 1000L){
+        hunt(huntLvl)
+    }
 
     constructor():this("Default")
 
@@ -54,6 +59,14 @@ class Hero(n: String) : Unit(0) {
 
     fun load(){
         //loader
+    }
+
+    fun hunt(lvl:Int){
+        if(oppos.isEmpty() && hp > hpMax/3 && Random().nextInt(100) > 97){
+            val oppoLvl = Random().nextInt(4)-2+lvl
+            oppos.add(Unit(oppoLvl))
+            println("Oppo added: lvl $lvl")
+        }
     }
 
     override fun toString():String{

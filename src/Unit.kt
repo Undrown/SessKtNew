@@ -63,6 +63,8 @@ open class Unit(var lvl: Int) {
     }
 
     init {
+        if(lvl < 0)
+            lvl = 0
         randomize(lvl)
         recalculate()
 
@@ -82,6 +84,9 @@ open class Unit(var lvl: Int) {
     open fun hit(){
         val dmg = Random.nextFloat()*(atkMax-atkMin) + atkMin
         val oppo = oppos[Random.nextInt(oppos.size)]
+        if (this !in oppo.oppos){
+            oppo.oppos.add(this)
+        }
         oppo.getHit(dmg)
         println("$this hits $oppo with $dmg")
     }
